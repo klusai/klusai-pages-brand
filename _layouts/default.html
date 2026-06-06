@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/brand/icon-only.svg' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/brand.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  {%- comment -%}
+    Per-site accent: remap the semantic --accent to the chosen ramp (set `accent: <ramp>`
+    in _config.yml, e.g. `accent: academy`). Defaults to Research Teal (baked in brand.css)
+    when unset. Each ramp defines -100/-400/-500/-600/-700 in brand.css.
+  {%- endcomment -%}
+  {%- if site.accent -%}
+  <style>
+    :root {
+      --accent: var(--{{ site.accent }}-600);
+      --accent-soft-bg: var(--{{ site.accent }}-100);
+      --accent-soft-text: var(--{{ site.accent }}-700);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: var(--{{ site.accent }}-400);
+        --accent-soft-bg: color-mix(in oklab, var(--{{ site.accent }}-500) 24%, transparent);
+        --accent-soft-text: var(--{{ site.accent }}-400);
+      }
+    }
+  </style>
+  {%- endif -%}
+  {%- feed_meta -%}
+  {%- seo -%}
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav-row">
+      <a class="brand-lockup" href="{{ '/' | relative_url }}" aria-label="{{ site.title | default: 'KlusAI' }} home">
+        <img class="logo-light" src="{{ '/assets/brand/logo-horizontal.svg' | relative_url }}" alt="KlusAI">
+        <img class="logo-dark"  src="{{ '/assets/brand/logo-horizontal-white.svg' | relative_url }}" alt="KlusAI">
+        {%- if site.brand_sub -%}<span class="brand-sub">{{ site.brand_sub }}</span>{%- endif -%}
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-controls="nav-menu" aria-expanded="false">
+        <svg class="i-bars" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg class="i-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <nav class="site-nav">
+          {%- for item in site.nav -%}
+          <a href="{% if item.url contains '://' %}{{ item.url }}{% else %}{{ item.url | relative_url }}{% endif %}">{{ item.title }}</a>
+          {%- endfor -%}
+        </nav>
+        <div class="nav-right">
+          <a class="btn nav-cta" href="{{ site.nav_cta_url | default: 'https://klusai.com' }}">{{ site.nav_cta_text | default: 'klusai.com' }}&nbsp;↗</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      © {{ site.time | date: "%Y" }} {{ site.org_legal_name | default: 'KlusAI Labs SRL' }} ·
+      <a href="https://klusai.com">klusai.com</a> ·
+      <a href="https://github.com/klusai">GitHub</a> ·
+      <a href="https://huggingface.co/klusai">Hugging Face</a>
+      {%- if site.feed_in_footer -%} · <a href="{{ '/feed.xml' | relative_url }}">RSS</a>{%- endif -%}
+      <div class="foot-tag">Applied Research · AI Services · Ventures</div>
+      {%- if site.footer_legal -%}<div class="foot-legal">{{ site.footer_legal }}</div>{%- endif -%}
+    </div>
+  </footer>
+  <script>
+    (function () {
+      var btn = document.querySelector('.nav-toggle');
+      if (!btn) return;
+      var row = btn.closest('.nav-row');
+      function setOpen(open) {
+        row.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      btn.addEventListener('click', function () { setOpen(!row.classList.contains('open')); });
+      row.querySelectorAll('.nav-menu a').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    })();
+  </script>
+</body>
+</html>
