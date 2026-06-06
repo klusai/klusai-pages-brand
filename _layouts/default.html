@@ -44,7 +44,21 @@
       <div class="nav-menu" id="nav-menu">
         <nav class="site-nav">
           {%- for item in site.nav -%}
-          <a href="{% if item.url contains '://' %}{{ item.url }}{% else %}{{ item.url | relative_url }}{% endif %}">{{ item.title }}</a>
+            {%- if item.children -%}
+            <div class="nav-item has-submenu">
+              <button type="button" class="nav-parent" aria-expanded="false" aria-haspopup="true">
+                {{ item.title }}
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="submenu">
+                {%- for child in item.children -%}
+                <a href="{% if child.url contains '://' %}{{ child.url }}{% else %}{{ child.url | relative_url }}{% endif %}">{{ child.title }}</a>
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- else -%}
+            <a class="nav-item" href="{% if item.url contains '://' %}{{ item.url }}{% else %}{{ item.url | relative_url }}{% endif %}">{{ item.title }}</a>
+            {%- endif -%}
           {%- endfor -%}
         </nav>
         <div class="nav-right">
@@ -71,18 +85,43 @@
   </footer>
   <script>
     (function () {
-      var btn = document.querySelector('.nav-toggle');
-      if (!btn) return;
-      var row = btn.closest('.nav-row');
-      function setOpen(open) {
+      var row = document.querySelector('.nav-row');
+      if (!row) return;
+      var toggle = row.querySelector('.nav-toggle');
+      function setMenuOpen(open) {
         row.classList.toggle('open', open);
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
-      btn.addEventListener('click', function () { setOpen(!row.classList.contains('open')); });
-      row.querySelectorAll('.nav-menu a').forEach(function (a) {
-        a.addEventListener('click', function () { setOpen(false); });
+      function closeSubmenus(except) {
+        row.querySelectorAll('.has-submenu.open').forEach(function (o) {
+          if (o === except) return;
+          o.classList.remove('open');
+          var p = o.querySelector('.nav-parent');
+          if (p) p.setAttribute('aria-expanded', 'false');
+        });
+      }
+      if (toggle) {
+        toggle.addEventListener('click', function () { setMenuOpen(!row.classList.contains('open')); });
+      }
+      row.querySelectorAll('.nav-parent').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var li = btn.closest('.has-submenu');
+          var willOpen = !li.classList.contains('open');
+          closeSubmenus(li);
+          li.classList.toggle('open', willOpen);
+          btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        });
       });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+      row.querySelectorAll('.nav-menu a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenuOpen(false); closeSubmenus(); });
+      });
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.has-submenu')) closeSubmenus();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { setMenuOpen(false); closeSubmenus(); }
+      });
     })();
   </script>
 </body>
