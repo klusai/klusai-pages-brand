@@ -319,6 +319,35 @@ main { display: block; }
 .chip-accent { background: var(--accent-soft-bg); color: var(--accent-soft-text); }
 .chip-muted { background: var(--surface-alt); color: var(--text-secondary); }
 
+/* ---- Feature / offering cards (VERTICAL: icon on top, copy full-width) ----
+   Use for product/offering grids where descriptions are long — the horizontal
+   .card crams long copy into a narrow column in multi-col grids. */
+.feature-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 980px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .feature-grid { grid-template-columns: 1fr; } }
+.feature-card {
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow);
+  text-decoration: none; color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.feature-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--accent) 14%, transparent);
+  transform: translateY(-2px);
+}
+.feature-card .icon-tile {
+  flex: none; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 0.95rem;
+  background: var(--accent-soft-bg); color: var(--accent-soft-text);
+  font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.feature-card .eyebrow { font-size: 0.72rem; margin: 0 0 0.3rem; }
+.feature-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+.feature-card p { margin: 0 0 1rem; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.55; flex: 1 0 auto; }
+.feature-card .feature-meta { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; margin-top: auto; }
+
 /* ---- Tables ---- */
 .table-card {
   background: var(--surface); border: 1px solid var(--border);
