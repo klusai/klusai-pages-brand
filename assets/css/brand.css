@@ -454,3 +454,23 @@ table thead th { border-bottom: 2px solid var(--border); }
 .site-footer a { color: var(--text-secondary); }
 .site-footer .foot-tag { margin-top: 0.4rem; color: var(--accent); font-weight: 500; }
 .site-footer .foot-legal { margin-top: 0.6rem; max-width: 720px; font-size: 0.8rem; }
+
+/* ---- Home enrichment: subheads, FAQ, closing CTA (additive) ---- */
+.section-head .section-sub {
+  margin: 0.7rem 0 0; max-width: 44rem;
+  color: var(--text-secondary); font-size: 1.02rem; line-height: 1.6;
+}
+.section .cta-row { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+
+.faq h3 { margin: 0; padding-top: 1.3rem; font-size: 1.05rem; }
+.faq h3:first-child { padding-top: 0; }
+.faq h3 + p {
+  margin: 0.4rem 0 0; padding-bottom: 1.3rem;
+  color: var(--text-secondary); line-height: 1.6;
+  border-bottom: 1px solid var(--border);
+}
+.faq h3 + p:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.section-cta { background: var(--surface-alt); border-top: 1px solid var(--border); }
+.section-cta .section-head { text-align: center; }
+.section-cta .section-head .section-sub { margin-left: auto; margin-right: auto; }
