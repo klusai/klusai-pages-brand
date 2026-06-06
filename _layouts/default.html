@@ -34,7 +34,7 @@
     <div class="wrap nav-row">
       <a class="brand-lockup" href="{{ '/' | relative_url }}" aria-label="{{ site.title | default: 'KlusAI' }} home">
         <img class="logo-light" src="{{ '/assets/brand/logo-horizontal.svg' | relative_url }}" alt="KlusAI">
-        <img class="logo-dark"  src="{{ '/assets/brand/logo-horizontal-white.svg' | relative_url }}" alt="KlusAI">
+        <img class="logo-dark"  src="{{ '/assets/brand/logo-horizontal-white.svg' | relative_url }}" alt="" aria-hidden="true">
         {%- if site.brand_sub -%}<span class="brand-sub">{{ site.brand_sub }}</span>{%- endif -%}
       </a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-controls="nav-menu" aria-expanded="false">
