@@ -402,7 +402,10 @@ main { display: block; }
   border-color: var(--accent);
   box-shadow: 0 8px 24px color-mix(in oklab, var(--accent) 14%, transparent);
   transform: translateY(-2px);
+  text-decoration: none; /* whole card is a link — don't underline all its text on hover */
 }
+/* the "View program →" affordance carries the hover cue, not an underline */
+.feature-card:hover .feature-cta { color: var(--accent); }
 .feature-card:hover .feature-cta { gap: 0.5rem; }
 .feature-card .icon-tile {
   flex: none; width: 44px; height: 44px; border-radius: 12px; margin-bottom: 0.95rem;
