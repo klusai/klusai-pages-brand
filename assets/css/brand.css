@@ -267,7 +267,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
   }
   .nav-menu .site-nav a:first-child { border-top: none; }
   /* submenu becomes a static accordion inside the mobile menu */
-  .nav-menu .site-nav .has-submenu { width: 100%; }
+  /* .has-submenu is also a .nav-item (inline-flex row) — force it to a
+     vertical stack so the submenu drops BELOW the parent, not beside it. */
+  .nav-menu .site-nav .has-submenu {
+    width: 100%; display: flex; flex-direction: column; align-items: stretch;
+  }
   .nav-menu .site-nav .nav-parent {
     width: 100%; justify-content: space-between;
     padding: 0.85rem 1.5rem; font-size: 1rem; color: var(--text);
