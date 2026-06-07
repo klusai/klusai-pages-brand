@@ -474,3 +474,7 @@ table thead th { border-bottom: 2px solid var(--border); }
 .section-cta { background: var(--surface-alt); border-top: 1px solid var(--border); }
 .section-cta .section-head { text-align: center; }
 .section-cta .section-head .section-sub { margin-left: auto; margin-right: auto; }
+
+/* Fully-centered "statement" section (heading + prose + chips + button). */
+.section-statement .wrap > p { text-align: center; }
+.section-statement .chip-row { justify-content: center; }

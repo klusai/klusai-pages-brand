@@ -26,6 +26,17 @@
     }
   </style>
   {%- endif -%}
+  {%- comment -%}
+    Opt-in: center section headings (eyebrow + h2 + subhead) to match a
+    centered hero. Set `center_sections: true` in _config.yml. Card bodies,
+    FAQ answers, and prose stay left-aligned for readability.
+  {%- endcomment -%}
+  {%- if site.center_sections -%}
+  <style>
+    .section .section-head { text-align: center; }
+    .section .section-head .section-sub { margin-left: auto; margin-right: auto; }
+  </style>
+  {%- endif -%}
   {%- feed_meta -%}
   {%- seo -%}
 </head>
